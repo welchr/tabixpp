@@ -1,3 +1,6 @@
+#ifndef TABIXPP_H
+#define TABIXPP_H
+
 #include <string>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -33,3 +36,5 @@ public:
   bool getNextLine(std::string& line);
   bool getNextLineKS();
 };
+
+#endif
