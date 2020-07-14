@@ -1,5 +1,7 @@
 #include "tabix.hpp"
 
+using namespace std;
+
 Tabix::Tabix(void) { }
 
 Tabix::Tabix(string& file) {
