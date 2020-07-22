@@ -10,6 +10,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <stdexcept>
 
 class Tabix {
   htsFile* fn;

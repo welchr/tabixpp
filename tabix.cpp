@@ -16,29 +16,25 @@ Tabix::Tabix(string& file) {
     strcat(strcpy(fnidx, cfilename), ".tbi");
     if ( bgzf_is_bgzf(cfilename)!=1 )
     {
-        cerr << "[tabix++] was bgzip used to compress this file? " << file << endl;
         free(fnidx);
-        exit(1);
+        throw runtime_error("[tabix++] error reading file " + file + " - was bgzip used to compress this file? And is the file accessible?");
     }
     // Common source of errors: new VCF is used with an old index
     stat(fnidx, &stat_tbi);
     stat(cfilename, &stat_vcf);
     if ( stat_vcf.st_mtime > stat_tbi.st_mtime )
     {
-        cerr << "[tabix++] the index file is older than the vcf file. Please use '-f' to overwrite or reindex." << endl;
         free(fnidx);
-        exit(1);
+        throw runtime_error("[tabix++] index file " + string(fnidx) + "is older than the vcf/bcf file. Please reindex.");
     }
     free(fnidx);
 
     if ((fn = hts_open(cfilename, "r")) == 0) {
-        cerr << "[tabix++] fail to open the data file." << endl;
-        exit(1);
+        throw runtime_error("[tabix++] failed to open data file " + file);
     }
 
     if ((tbx = tbx_index_load(cfilename)) == NULL) {
-        cerr << "[tabix++] failed to load the index file." << endl;
-        exit(1);
+        throw runtime_error("[tabix++] failed to load index file for file " + file);
     }
 
     int nseq;
