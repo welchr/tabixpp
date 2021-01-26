@@ -55,6 +55,7 @@ Tabix::Tabix(string& file) {
 Tabix::~Tabix(void) {
     tbx_itr_destroy(iter);
     tbx_destroy(tbx);
+    hts_close(fn);
     free(str.s);
 }
 
